@@ -7,6 +7,13 @@ Created on Tue Apr 19 15:24:36 2016
 MAE 2.1.0 has some issues with newlines, occasionally incrementing tag span 
 counts to include them rather than ignoring them.  This script creates a new 
 set of .xml files that correct this.
+
+This script is to be run from the terminal with a directory path argument.
+
+e.g.:
+
+$ python fix_spans.py Some_Path/
+
 """
 
 # correct spans in MAE-annotated xml files that have been offset due to newlines
