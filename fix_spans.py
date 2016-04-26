@@ -14,9 +14,26 @@ e.g.:
 
 $ python fix_spans.py Some_Path/
 
+The XML files to be adjusted have a uniform format.  There is always an XML 
+field <TEXT> that contains the text for which the annotation has been created.  
+Later in the file, items in the text are pointed to using a series of extent 
+tags are designated by character offsets, labeled that tag's "spans".  
+
+e.g.:
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<ProjectName>
+<TEXT><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit.]]></TEXT>
+<TAGS>
+<Tag1 id="t0" spans="6~11" text="ipsum" attribute="att1"/>
+<Tag2 id="t1" spans="12~17" text="dolor" attribute="att2" />
+</TAGS>
+</ProjectName>
+
 """
 
 # correct spans in MAE-annotated xml files that have been offset due to newlines
+
 
 import sys, time, re, os
 
@@ -109,7 +126,7 @@ def run(fname):
                             new_start = old_start - i
                             #print("os={}, ns={}, i={}".format(old_start,new_start,i))
                             new_end = old_end - i
-                            break # stop looking for the line.  It's okay Harold, it's Wednesday!
+                            break # stop looking for the line
                         # TODO: if you want to allow for cross-line spans this is where you could make the change
                     # the line to write to the new file:
                     new_line = spans[0]+str(new_start)+'~'+str(new_end)+spans[3]
